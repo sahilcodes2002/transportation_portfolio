@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Transportation Systems</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #1a3a5f;
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: #4dabf7;
+        }
+
+        nav ul li a.active {
+            color: #4dabf7;
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #4dabf7;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Styles */
+        .page {
+            display: none;
+            padding: 4rem 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a3a5f 0%, #2c5282 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #4dabf7;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background-color: #339af0;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: #1a3a5f;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #4dabf7;
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c5282;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Card Styles */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img {
+            height: 200px;
+            background-color: #2c5282;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature i {
+            font-size: 3rem;
+            color: #4dabf7;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #4dabf7;
+            outline: none;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a3a5f;
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #4dabf7;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #cbd5e0;
+            margin-bottom: 1rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #4dabf7;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #2c5282;
+            border-radius: 50%;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #4dabf7;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #2c5282;
+            color: #cbd5e0;
+            font-size: 0.9rem;
+        }
+
+        .student-info {
+            text-align: center;
+            background-color: #0f2a47;
+            color: white;
+            padding: 0.8rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            border-radius: 5px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                margin-bottom: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i>🚗</i>
+                    <span>IntelliTrans</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="about">About ITS</a></li>
+                        <li><a href="#" class="nav-link" data-page="technologies">Technologies</a></li>
+                        <li><a href="#" class="nav-link" data-page="benefits">Benefits</a></li>
+                        <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">☰</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="container">
+                <h1>Intelligent Transportation Systems</h1>
+                <h4>Sahil Kumar Sinha - RA2211032010010</h4>
+                <br>
+                <p>Revolutionizing how we move, connect, and thrive in our cities through smart technology and data-driven solutions.</p>
+                <a href="#" class="btn nav-link" data-page="about">Learn More</a>
+            </div>
+        </section>
+
+        <div class="container">
+            <section>
+                <h2>What is Intelligent Transportation?</h2>
+                <p>Intelligent Transportation Systems (ITS) apply information and communication technologies to transport infrastructure and vehicles to improve safety, efficiency, and sustainability. These systems integrate data from various sources to enable smarter decisions for both travelers and transportation managers.</p>
+                
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-img">🚦</div>
+                        <div class="card-content">
+                            <h3>Smart Traffic Management</h3>
+                            <p>Adaptive traffic signals that respond to real-time traffic conditions to reduce congestion and improve flow.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">🚗</div>
+                        <div class="card-content">
+                            <h3>Connected Vehicles</h3>
+                            <p>Vehicles that communicate with each other and with infrastructure to prevent accidents and optimize routes.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">📱</div>
+                        <div class="card-content">
+                            <h3>Mobility as a Service</h3>
+                            <p>Integrated platforms that combine various transport options for seamless multimodal journeys.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+        <div class="container">
+            <section>
+                <h2>About Intelligent Transportation Systems</h2>
+                <p>Intelligent Transportation Systems (ITS) represent the integration of information and communication technologies with transport infrastructure to improve transportation outcomes. These systems collect, process, and disseminate information to make travel safer, more efficient, and more sustainable.</p>
+                
+                <h3>The Evolution of ITS</h3>
+                <p>ITS has evolved from simple traffic signal coordination to complex, interconnected systems that leverage AI, IoT, and big data analytics. Early systems focused on traffic management centers and electronic toll collection, while modern ITS encompasses vehicle-to-everything (V2X) communication, predictive analytics, and autonomous vehicle integration.</p>
+                
+                <h3>Key Components of ITS</h3>
+                <div class="features-grid">
+                    <div class="feature">
+                        <i>📊</i>
+                        <h4>Data Collection</h4>
+                        <p>Sensors, cameras, and connected devices gather real-time traffic and environmental data.</p>
+                    </div>
+                    <div class="feature">
+                        <i>🖥️</i>
+                        <h4>Processing Centers</h4>
+                        <p>Centralized systems analyze data to identify patterns and optimize traffic flow.</p>
+                    </div>
+                    <div class="feature">
+                        <i>📡</i>
+                        <h4>Communication Networks</h4>
+                        <p>Reliable networks transmit information between vehicles, infrastructure, and control centers.</p>
+                    </div>
+                    <div class="feature">
+                        <i>👤</i>
+                        <h4>User Interfaces</h4>
+                        <p>Apps, websites, and in-vehicle displays provide travelers with real-time information.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Technologies Page -->
+    <div id="technologies" class="page">
+        <div class="container">
+            <section>
+                <h2>ITS Technologies</h2>
+                <p>Intelligent Transportation Systems leverage a wide array of technologies to transform how we move through our cities and regions.</p>
+                
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-img">🤖</div>
+                        <div class="card-content">
+                            <h3>Artificial Intelligence</h3>
+                            <p>AI algorithms process vast amounts of traffic data to predict congestion, optimize signal timing, and enable autonomous vehicles.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">🌐</div>
+                        <div class="card-content">
+                            <h3>Internet of Things (IoT)</h3>
+                            <p>Connected sensors and devices throughout the transportation network collect and share real-time data.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">📶</div>
+                        <div class="card-content">
+                            <h3>5G Connectivity</h3>
+                            <p>High-speed, low-latency networks enable real-time communication between vehicles and infrastructure.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">🗺️</div>
+                        <div class="card-content">
+                            <h3>GIS and Mapping</h3>
+                            <p>Advanced geographic information systems provide detailed spatial data for routing and planning.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">☁️</div>
+                        <div class="card-content">
+                            <h3>Cloud Computing</h3>
+                            <p>Scalable computing resources process massive datasets and run complex transportation models.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">🔒</div>
+                        <div class="card-content">
+                            <h3>Blockchain</h3>
+                            <p>Distributed ledger technology enables secure transactions for mobility services and data sharing.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Benefits Page -->
+    <div id="benefits" class="page">
+        <div class="container">
+            <section>
+                <h2>Benefits of Intelligent Transportation</h2>
+                <p>Implementing Intelligent Transportation Systems delivers significant advantages across multiple dimensions of urban life and mobility.</p>
+                
+                <h3>Safety Improvements</h3>
+                <p>ITS technologies can reduce accidents by up to 30% through collision avoidance systems, improved intersection design, and real-time hazard warnings. Connected vehicle technology allows cars to "talk" to each other, preventing many types of crashes before they occur.</p>
+                
+                <h3>Environmental Benefits</h3>
+                <p>By optimizing traffic flow and reducing congestion, ITS can decrease fuel consumption and emissions by 10-20%. Smart routing directs vehicles along the most fuel-efficient paths, while integrated mobility platforms encourage use of public and active transportation.</p>
+                
+                <h3>Economic Advantages</h3>
+                <p>Reduced congestion saves businesses and commuters billions annually in lost time and fuel costs. ITS also creates new markets for mobility services and transportation data, driving innovation and economic growth.</p>
+                
+                <h3>Enhanced Mobility</h3>
+                <p>ITS makes transportation more accessible for all users, including those with disabilities and older adults. Real-time information and integrated payment systems simplify multimodal journeys, while demand-responsive services fill gaps in traditional transit networks.</p>
+                
+                <div class="features-grid">
+                    <div class="feature">
+                        <i>⏱️</i>
+                        <h4>Time Savings</h4>
+                        <p>Reduced travel times through optimized traffic flow and incident management.</p>
+                    </div>
+                    <div class="feature">
+                        <i>💰</i>
+                        <h4>Cost Reduction</h4>
+                        <p>Lower fuel consumption, vehicle maintenance, and infrastructure costs.</p>
+                    </div>
+                    <div class="feature">
+                        <i>🌍</i>
+                        <h4>Sustainability</h4>
+                        <p>Reduced emissions and more efficient use of transportation resources.</p>
+                    </div>
+                    <div class="feature">
+                        <i>🚶</i>
+                        <h4>Accessibility</h4>
+                        <p>Improved mobility options for all segments of the population.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <div class="container">
+            <section>
+                <h2>Contact Us</h2>
+                <p>Have questions about Intelligent Transportation Systems or interested in implementing solutions in your community? Reach out to our team of experts.</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
+                    <div>
+                        <h3>Get In Touch</h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <select id="subject">
+                                    <option value="general">General Inquiry</option>
+                                    <option value="technical">Technical Support</option>
+                                    <option value="partnership">Partnership Opportunity</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn">Send Message</button>
+                        </form>
+                    </div>
+                    
+                    <div>
+                        <h3>Our Information</h3>
+                        <p><strong>Address:</strong><br>123 Innovation Drive<br>Tech City, TC 10101</p>
+                        <p><strong>Phone:</strong><br>+1 (555) 123-4567</p>
+                        <p><strong>Email:</strong><br>info@intellitrans.com</p>
+                        
+                        <h3 style="margin-top: 2rem;">Follow Us</h3>
+                        <div class="social-icons">
+                            <a href="#">f</a>
+                            <a href="#">t</a>
+                            <a href="#">in</a>
+                            <a href="#">ig</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>IntelliTrans</h3>
+                    <p>Leading the transformation of transportation through intelligent systems and innovative solutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#" class="nav-link" data-page="home">Home</a>
+                    <a href="#" class="nav-link" data-page="about">About ITS</a>
+                    <a href="#" class="nav-link" data-page="technologies">Technologies</a>
+                    <a href="#" class="nav-link" data-page="benefits">Benefits</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <a href="#">Case Studies</a>
+                    <a href="#">White Papers</a>
+                    <a href="#">Industry Reports</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest updates on ITS technologies and trends.</p>
+                    <div style="display: flex; margin-top: 1rem;">
+                        <input type="email" placeholder="Your email" style="flex: 1; border-radius: 5px 0 0 5px; margin: 0;">
+                        <button class="btn" style="border-radius: 0 5px 5px 0; padding: 0.8rem 1.2rem;">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Student Information -->
+            <div class="student-info">
+                Sahil Kumar Sinha - RA2211032010010
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 IntelliTrans. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all navigation links
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Add click event listeners to navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Get the target page ID
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    // Hide all pages
+                    document.querySelectorAll('.page').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    // Show the target page
+                    document.getElementById(targetPage).classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            });
+            
+            // Mobile menu toggle
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const nav = document.querySelector('nav ul');
+            
+            mobileMenu.addEventListener('click', function() {
+                nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            });
+            
+            // Handle form submission
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your message! We will get back to you soon.');
+                    contactForm.reset();
+                });
+            }
+            
+            // Adjust navigation for mobile on resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    nav.style.display = 'flex';
+                } else {
+                    nav.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
